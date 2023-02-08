@@ -1,0 +1,130 @@
+{
+  "analyzer": "lucene.standard",
+  "searchAnalyzer": "lucene.standard",
+  "mappings": {
+    "dynamic": false,
+    "fields": {
+      "applicants": {
+        "dynamic": false,
+        "fields": {
+          "basicInfo": {
+            "dynamic": false,
+            "fields": {
+              "citizenship": {
+                "analyzer": "lucene.keyword",
+                "searchAnalyzer": "lucene.keyword",
+                "type": "string"
+              },
+              "emailAddress": [
+                {
+                  "analyzer": "emailUrlExtractor",
+                  "searchAnalyzer": "emailUrlExtractor",
+                  "type": "string"
+                },
+                {
+                  "analyzer": "emailUrlExtractor",
+                  "maxGrams": 8,
+                  "minGrams": 3,
+                  "tokenization": "edgeGram",
+                  "type": "autocomplete"
+                }
+              ],
+              "fullname": [
+                {
+                  "type": "string"
+                },
+                {
+                  "maxGrams": 8,
+                  "minGrams": 3,
+                  "tokenization": "edgeGram",
+                  "type": "autocomplete"
+                }
+              ],
+              "mobilePhone": [
+                {
+                  "type": "string"
+                },
+                {
+                  "maxGrams": 8,
+                  "minGrams": 3,
+                  "tokenization": "edgeGram",
+                  "type": "autocomplete"
+                }
+              ]
+            },
+            "type": "document"
+          }
+        },
+        "type": "embeddedDocuments"
+      },
+      "fourCorner": {
+        "dynamic": false,
+        "fields": {
+          "forms": {
+            "dynamic": false,
+            "fields": {
+              "loanDetails": {
+                "dynamic": false,
+                "fields": {
+                  "loanAmount": {
+                    "type": "number"
+                  }
+                },
+                "type": "document"
+              }
+            },
+            "type": "document"
+          },
+          "updated_at": {
+            "type": "date"
+          }
+        },
+        "type": "document"
+      },
+      "mercuryStatus": {
+        "analyzer": "lucene.keyword",
+        "searchAnalyzer": "lucene.keyword",
+        "type": "string"
+      },
+      "opportunityCreateStatus": {
+        "type": "string"
+      },
+      "readBy": {
+        "analyzer": "lucene.keyword",
+        "searchAnalyzer": "lucene.keyword",
+        "type": "string"
+      },
+      "scenarioUsers": {
+        "analyzer": "lucene.keyword",
+        "searchAnalyzer": "lucene.keyword",
+        "type": "string"
+      },
+      "search": [
+        {
+          "type": "string"
+        },
+        {
+          "analyzer": "lucene.whitespace",
+          "maxGrams": 8,
+          "minGrams": 3,
+          "tokenization": "edgeGram",
+          "type": "autocomplete"
+        }
+      ]
+    }
+  },
+  "analyzers": [
+    {
+      "charFilters": [],
+      "name": "emailUrlExtractor",
+      "tokenFilters": [
+        {
+          "type": "lowercase"
+        }
+      ],
+      "tokenizer": {
+        "type": "uaxUrlEmail"
+      }
+    }
+  ]
+}
